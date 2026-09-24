@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import { sql } from "kysely";
 import { openDatabase } from "./database.js";
+import { registerRoutes } from "./http/routes.js";
 
 export function buildApp() {
   const app = Fastify({ logger: false });
@@ -10,5 +11,6 @@ export function buildApp() {
     await database.destroy();
     return { status: "ok" };
   });
+  app.register(registerRoutes);
   return app;
 }
